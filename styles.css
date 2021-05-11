@@ -1,0 +1,65 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+}
+
+/* menu-conatiner */
+.menu-container{
+    height: 4rem;
+    background-color: lightpink;
+}
+
+/* formula-container */
+.formula-container{
+    height: 2rem;
+    background-color: lightcoral;
+}
+
+/* grid-container */
+.grid-container{
+    height: calc( 100vh - ( 4rem + 2rem + 2rem ) );
+    background-color: lightgreen;
+}
+
+/* sheets-container */
+.sheets-container{
+    height: 2rem;
+    background-color: lightblue;
+    display: flex;
+}
+
+.add-sheet_btn-container{
+    height: 100%;
+    width: 3rem;
+    border: 1px solid;
+    padding-top: 0.4rem;
+    padding-left: 0.5rem;
+}
+
+.sheet-list{
+    width: calc( 100vw - 3rem );
+    border: 1px solid;
+    display: flex;
+    overflow: auto;
+}
+
+.sheet-list::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.sheet-list {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.sheet{
+    min-width: 5rem;
+    height: 100%;
+    background-color: gray;
+    border: 1px solid blue;
+    text-align: center;
+    padding-top: 0.35rem;
+}

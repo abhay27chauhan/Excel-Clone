@@ -10,19 +10,90 @@ body{
 .menu-container{
     height: 4rem;
     background-color: lightpink;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.menu-container *{
+    border: 1px solid;
+    height:60%;
+}
+
+.font-size{
+    width: 5%;
+}
+
+.font-family{
+    width: 21%;
+}
+
+.bui-container{
+    width: 21%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.bui-container *{
+    width:30%;
+    height:80%;
+    text-align: center;
+}
+
+.align-container{
+    width: 14%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.align-container *{
+    width:30%;
+    height:80%;
+    text-align: center;
+}
+
+.color-container{
+    width: 10%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.color-container *{
+    width: 45%;
+    height: 80%;
 }
 
 /* formula-container */
 .formula-container{
     height: 2rem;
     background-color: lightcoral;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
+
+.formula-container *{
+    height: 70%;
+}
+
+.address-input{
+    width:4rem;
+}
+
+.formula-input{
+    width:calc(100vw - 6rem);
+}  
 
 /* grid-container */
 .grid-container{
     height: calc( 100vh - ( 4rem + 2rem + 2rem ) );
     background-color: lightgreen;
     overflow: auto;
+    position: relative;
 }
 
 .box{
@@ -37,12 +108,23 @@ body{
 }
 
 .top_row{
+    top: 0;
+    left: 2rem;
     height:2rem;
     display:flex;
+    position: absolute;
+}
+
+.grid{
+    top: 2rem;
+    left: 2rem;
+    position: absolute;
+    background-color: lightblue;
 }
 
 .cell{
     border: 1px solid;
+    height: 2rem;
     min-width: 4rem;
     text-align: center;
 }

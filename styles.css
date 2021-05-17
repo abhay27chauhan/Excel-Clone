@@ -129,6 +129,11 @@ body{
     text-align: center;
 }
 
+.dStyle{
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
 .row{
     display: flex;
 }
@@ -175,4 +180,9 @@ body{
 
 .active{
     background-color: white;
+}
+
+.active-btn{
+    background-color: rgb(99, 98, 98);
+    color: white;
 }

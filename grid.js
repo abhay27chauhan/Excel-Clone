@@ -10,6 +10,7 @@ let italicBtn = document.querySelector(".italic");
 let allAlignButtons = document.querySelectorAll(".align-container>*")
 let fontSizeElem = document.querySelector(".font-size");
 let fontFamilyElem = document.querySelector(".font-family");
+let colorButtons = document.querySelectorAll(".color-container>*");
 
 let rows = 100;
 let cols = 26;
@@ -58,7 +59,8 @@ for(let i=0; i<rows; i++){
             fontFamily: "sans-serif",
             fontSize: "12",
             color: "black",
-            bColor: "none"
+            bColor: "none",
+            value: ""
         }
 
         row.push(cell)
@@ -102,6 +104,28 @@ for(let i=0; i<allCells.length; i++){
         }else{
             italicBtn.classList.add("active-btn");
         }
+        
+        if(cellObject.hAlign == "center"){
+            allAlignButtons[1].classList.add("active-btn");
+            allAlignButtons[0].classList.remove("active-btn");
+            allAlignButtons[2].classList.remove("active-btn");
+        }else if(cellObject.hAlign == "left"){
+            allAlignButtons[0].classList.add("active-btn");
+            allAlignButtons[1].classList.remove("active-btn");
+            allAlignButtons[2].classList.remove("active-btn");
+        }else{
+            allAlignButtons[2].classList.add("active-btn");
+            allAlignButtons[0].classList.remove("active-btn");
+            allAlignButtons[1].classList.remove("active-btn");
+        }
+
+        colorButtons[0].value = cellObject.color;
+
+        colorButtons[1].value = cellObject.bColor;
+
+        fontFamilyElem.value = cellObject.fontFamily;
+
+        fontSizeElem.value = cellObject.fontSize;
 
         console.log(cellObject)
     })
@@ -165,21 +189,61 @@ for(let i=0; i<allAlignButtons.length; i++){
     allAlignButtons[i].addEventListener("click", function(){
         let alignment = allAlignButtons[i].getAttribute("class");
         let uiCellElem = findUICellElement();
+        let rid = uiCellElem.getAttribute("rid");
+        let cid = uiCellElem.getAttribute("cid");
+
+        let cellObject = sheetDB[rid][cid];
+        cellObject.hAlign = alignment;
         uiCellElem.style.textAlign = alignment;
+
+        allAlignButtons.forEach(alignBtn => {
+            alignBtn.classList.remove("active-btn");
+        })
+
+        allAlignButtons[i].classList.add("active-btn");
     })
 }
 
 fontSizeElem.addEventListener("change", function(){
     let fontSize = fontSizeElem.value;
     let uiCellElem = findUICellElement();
+    let rid = uiCellElem.getAttribute("rid");
+    let cid = uiCellElem.getAttribute("cid");
+
+    let cellObject = sheetDB[rid][cid];
+    cellObject.fontSize = fontSize
     uiCellElem.style.fontSize = fontSize + "px";
 })
 
 fontFamilyElem.addEventListener("change", function(){
     let fontFamily = fontFamilyElem.value;
     let uiCellElem = findUICellElement();
+    let rid = uiCellElem.getAttribute("rid");
+    let cid = uiCellElem.getAttribute("cid");
+
+    let cellObject = sheetDB[rid][cid];
+    cellObject.fontFamily = fontFamily
     uiCellElem.style.fontFamily = fontFamily;
 })
+
+for(let i=0; i<colorButtons.length; i++){
+    colorButtons[i].addEventListener("change", function(){
+        let colorPropType = colorButtons[i].getAttribute("class");
+        let uiCellElem = findUICellElement();
+        let rid = uiCellElem.getAttribute("rid");
+        let cid = uiCellElem.getAttribute("cid");
+        
+        let val = colorButtons[i].value;
+        let cellObject = sheetDB[rid][cid];
+        if(colorPropType == "color"){
+            cellObject.color = val;
+            uiCellElem.style.color = val;
+        }else{
+            cellObject.bColor = val;
+            uiCellElem.style.backgroundColor = val;
+        }
+    })
+}
 
 function findUICellElement(){
     let address = addressInput.value;

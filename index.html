@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excel Clone</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -37,6 +38,16 @@
             <input type="color" class="color">
             <input type="color" class="bg-color">
         </div>
+
+        <div class="nos-container">
+            <span class="material-icons-outlined material-icons new">
+                add_circle_outline
+            </span>
+            <input type="file" name="" class="open">
+            <span class="material-icons-outlined material-icons save">
+                file_download
+            </span>
+        </div>
     </div>
     <div class="formula-container">
         <input type="text" class="address-input" readonly>
@@ -63,7 +74,8 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script src="grid.js"></script>
+    <script src="script.js"></script>
+    <script src="newOpenSave.js"></script>
 </body>
 </html>

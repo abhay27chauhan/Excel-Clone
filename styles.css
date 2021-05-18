@@ -67,6 +67,15 @@ body{
     height: 80%;
 }
 
+.nos-container{
+    display: flex;
+    align-items: center;
+}
+
+.nos-container>*{
+    border: none;
+}
+
 /* formula-container */
 .formula-container{
     height: 2rem;

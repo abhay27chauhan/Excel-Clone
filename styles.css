@@ -70,10 +70,18 @@ body{
 .nos-container{
     display: flex;
     align-items: center;
+    width: 20%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
 .nos-container>*{
     border: none;
+    cursor: pointer;
+}
+
+.new{
+    margin-right: 1.5rem;
 }
 
 /* formula-container */

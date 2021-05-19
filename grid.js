@@ -11,6 +11,7 @@ let allAlignButtons = document.querySelectorAll(".align-container>*")
 let fontSizeElem = document.querySelector(".font-size");
 let fontFamilyElem = document.querySelector(".font-family");
 let colorButtons = document.querySelectorAll(".color-container>*");
+let formulaBar = document.querySelector(".formula-input")
 
 let rows = 100;
 let cols = 26;
@@ -132,12 +133,18 @@ for(let i=0; i<allCells.length; i++){
 }
 
 boldBtn.addEventListener("click", function(){
+    // 1. click happens
+    // 2. getting address from address bar
     let uiCellElem = findUICellElement();
+
+    // 3. converting address to rid | cid
     let rid = uiCellElem.getAttribute("rid");
     let cid = uiCellElem.getAttribute("cid");
 
+    // 4. fetching cellObject from db
     let cellObject = sheetDB[rid][cid];
 
+    // 5. updating UI based on cellObject
     if(cellObject.bold == "normal"){
         uiCellElem.style.fontWeight = "bold";
         boldBtn.classList.add("active-btn");

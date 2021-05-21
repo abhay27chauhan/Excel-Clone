@@ -62,7 +62,8 @@ for(let i=0; i<rows; i++){
             color: "black",
             bColor: "none",
             value: "",
-            children: []
+            children: [],
+            formula: ""
         }
 
         row.push(cell)
@@ -79,8 +80,6 @@ for(let i=0; i<allCells.length; i++){
 
         rid = Number(rid);
         cid = Number(cid);
-
-        console.log(rid, cid)
 
         let address = `${String.fromCharCode(65 + cid)}${(rid + 1)}`
 
@@ -129,7 +128,8 @@ for(let i=0; i<allCells.length; i++){
 
         fontSizeElem.value = cellObject.fontSize;
 
-        console.log(cellObject)
+        formulaBar.value = cellObject.formula;
+
     })
 }
 

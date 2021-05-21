@@ -13,10 +13,13 @@ for(let i=0; i<allCells.length; i++){
 
         let cellObject = sheetDB[rid][cid];
 
-        cellObject.value = data;
-
-        // case 2
-        updateChildren(cellObject);
+        if(cellObject.value != Number(data)){
+            cellObject.value = data;
+            // case 3
+            removeFormula(cellObject);
+             // case 2
+            updateChildren(cellObject);
+        }
     })
 }
 
@@ -73,7 +76,6 @@ function setParentChArray(formula){
             let {rid, cid} = getRIDCIDFromAddress(tokens[i]);
             let chidArr = sheetDB[rid][cid].children;
             chidArr.push(address);
-            console.log(sheetDB[rid][cid]);
         }
     }
 }
@@ -99,6 +101,29 @@ function setChildValue(value, formula, rid, cid){
 
     sheetDB[rid][cid].value = value;
     sheetDB[rid][cid].formula = formula;
+}
+
+// case 3
+function removeFormula(cellObject){
+    let formula = cellObject.formula;
+    let address = addressInput.value;
+
+    if(formula){
+        tokens = formula.split(" ");
+
+        for(let i=0; i<tokens.length; i++){
+            let ascii = tokens[i].charCodeAt(0);
+            if(ascii >= 65 && ascii <= 90){
+                let {rid, cid} = getRIDCIDFromAddress(tokens[i]);
+                let parentObj = sheetDB[rid][cid];
+                let children = parentObj.children;
+                let idx = children.indexOf(address);
+                children.splice(idx, 1);
+            }
+        }
+    }
+
+    cellObject.formula = "";
 }
 
 // 'blur' event happens before 'click'

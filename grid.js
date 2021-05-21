@@ -61,7 +61,8 @@ for(let i=0; i<rows; i++){
             fontSize: "12",
             color: "black",
             bColor: "none",
-            value: ""
+            value: "",
+            children: []
         }
 
         row.push(cell)

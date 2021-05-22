@@ -13,6 +13,9 @@ let fontFamilyElem = document.querySelector(".font-family");
 let colorButtons = document.querySelectorAll(".color-container>*");
 let formulaBar = document.querySelector(".formula-input")
 
+let workBook = {};
+let sheetDB;
+
 let rows = 100;
 let cols = 26;
 
@@ -48,28 +51,101 @@ for(let i=0; i<rows; i++){
     grid.appendChild(row);
 }
 
-let sheetDB = [];
-for(let i=0; i<rows; i++){
-    let row = [];
-    for(let j=0; j<cols; j++){
-        let cell = {
-            bold: "normal",
-            italic: "normal",
-            underline: "none",
-            hAlign: "center",
-            fontFamily: "sans-serif",
-            fontSize: "12",
-            color: "black",
-            bColor: "none",
-            value: "",
-            children: [],
-            formula: ""
-        }
+let addBtn = document.querySelector(".add-sheet_btn-container");
+let sheetList = document.querySelector(".sheet-list");
+let firstSheet = document.querySelector(".sheet");
 
-        row.push(cell)
+firstSheet.addEventListener("click", makeSheetActive)
+
+firstSheet.click();
+
+addBtn.addEventListener("click", function(){
+    let allSheets = document.querySelectorAll(".sheet");
+    let lastSheet = allSheets[allSheets.length-1];
+    let lastIndex = lastSheet.getAttribute("idx");
+    lastIndex = Number(lastIndex);
+    
+    let newSheet = document.createElement("div");
+    newSheet.setAttribute("class", "sheet");
+    newSheet.setAttribute("idx", `${lastIndex + 1}`);
+    newSheet.innerText = `Sheet ${lastIndex + 2}`;
+    sheetList.appendChild(newSheet);
+
+    for(let i=0; i<allSheets.length; i++){
+        allSheets[i].classList.remove("active");
+    }
+    newSheet.classList.add("active");
+
+    let sheetName = `Sheet${lastIndex + 2}`
+    createSheet(sheetName);
+    sheetDB = workBook[sheetName];
+    setUI();
+
+    newSheet.addEventListener("click", makeSheetActive);
+})
+
+function makeSheetActive(e){
+    let cSheet = e.currentTarget;
+    let allSheets = document.querySelectorAll(".sheet");
+    for(let i=0; i<allSheets.length; i++){
+        allSheets[i].classList.remove("active");
+    }
+    cSheet.classList.add("active");
+    let idx = cSheet.getAttribute("idx");
+    let sheetName = `Sheet${Number(idx) + 1}`;
+
+    if(!workBook[sheetName]){
+        createSheet(sheetName)
     }
 
-    sheetDB.push(row);
+    sheetDB = workBook[sheetName];
+    setUI();
+}
+
+function createSheet(sheetName){
+    let newDB = [];
+    for(let i=0; i<rows; i++){
+        let row = [];
+        for(let j=0; j<cols; j++){
+            let cell = {
+                bold: "normal",
+                italic: "normal",
+                underline: "none",
+                hAlign: "center",
+                fontFamily: "sans-serif",
+                fontSize: "12",
+                color: "black",
+                bColor: "lightblue",
+                value: "",
+                children: [],
+                formula: ""
+            }
+
+            row.push(cell)
+        }
+
+        newDB.push(row);
+    }
+
+    workBook[sheetName] = newDB;
+}
+
+function setUI(){
+    for(let i=0; i<rows; i++){
+        for(let j=0; j<cols; j++){
+            let elem = document.querySelector(`.grid .cell[rid="${i}"][cid="${j}"]`);
+            let { bold, italic, underline, hAlign, fontFamily, fontSize, color, bColor, value} = sheetDB[i][j];
+            elem.style.fontWeight = bold;
+            elem.style.fontStyle = italic;
+            elem.style.textDecoration = underline;
+            elem.style.textAlign = hAlign;
+            elem.style.fontFamily = fontFamily;
+            elem.style.fontSize = fontSize;
+            elem.style.color = color;
+            elem.style.backgroundColor = bColor;
+            elem.innerText = value;
+        }
+    }
 }
 
 let allCells = document.querySelectorAll(".grid .cell");

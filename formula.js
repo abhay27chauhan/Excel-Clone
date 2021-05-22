@@ -1,3 +1,5 @@
+'use strict'
+
 // 1. formula can only be set through formula box
 // 2. space seperated tokens
 // 3. will implement 3 cases

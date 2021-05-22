@@ -146,6 +146,23 @@ function setUI(){
             elem.innerText = value;
         }
     }
+    boldBtn.classList.remove("active-btn");
+    underlineBtn.classList.remove("active-btn");
+    italicBtn.classList.remove("active-btn");
+
+    fontFamilyElem.value = "sans-serif";
+    fontSizeElem.value = "12";
+
+    for(let i=0; i<colorButtons.length; i++){
+        colorButtons[i].value = "#000000";
+    }
+
+    for(let i=0; i<allAlignButtons.length; i++){
+        let alignment = allAlignButtons[i].getAttribute("class");
+        if(alignment != "center"){
+            allAlignButtons[i].classList.remove("active-btn")
+        }
+    }
 }
 
 let allCells = document.querySelectorAll(".grid .cell");

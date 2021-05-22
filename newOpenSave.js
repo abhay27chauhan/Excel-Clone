@@ -1,3 +1,5 @@
+'use strict'
+
 let save = document.querySelector(".save");
 let open = document.querySelector(".open")
 

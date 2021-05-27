@@ -29,9 +29,26 @@ open.addEventListener("change", function(){
 
     fr.readAsText(fileObj);
     fr.onload = function(){
-        // 3d array
         let sheetArray = fr.result;
 
-        sheetDB = sheetArray[0];
+        let allSheets = document.querySelectorAll(".sheet");
+        let lastSheet = allSheets[allSheets.length-1];
+        let lastIndex = lastSheet.getAttribute("idx");
+        lastIndex = Number(lastIndex);
+        
+        let newSheet = document.createElement("div");
+        newSheet.setAttribute("class", "sheet");
+        newSheet.setAttribute("idx", `${lastIndex + 1}`);
+        newSheet.innerText = `Sheet ${lastIndex + 2}`;
+        sheetList.appendChild(newSheet);
+
+        newSheet.addEventListener("click", makeSheetActive);
+
+        let newIdx = lastIndex + 1;
+        workBook[newIdx] = JSON.parse(sheetArray);
+
+        localStorage.setItem("workBook", JSON.stringify(workBook));
+
+        newSheet.click();
     }
 })

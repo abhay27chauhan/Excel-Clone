@@ -21,6 +21,8 @@ for(let i=0; i<allCells.length; i++){
             removeFormula(cellObject);
              // case 2
             updateChildren(cellObject);
+            
+            localStorage.setItem("workBook", JSON.stringify(workBook));
         }
     })
 }

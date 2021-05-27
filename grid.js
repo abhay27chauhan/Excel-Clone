@@ -13,11 +13,15 @@ let fontFamilyElem = document.querySelector(".font-family");
 let colorButtons = document.querySelectorAll(".color-container>*");
 let formulaBar = document.querySelector(".formula-input")
 
-let workBook = {};
+let workBook = [];
 let sheetDB;
 
 let rows = 100;
 let cols = 26;
+
+if(localStorage.getItem("workBook")){
+    workBook = JSON.parse(localStorage.getItem("workBook"));
+}
 
 // left_col
 for(let i=0; i<rows; i++){
@@ -59,6 +63,16 @@ firstSheet.addEventListener("click", makeSheetActive)
 
 firstSheet.click();
 
+for(let i=1; i<workBook.length; i++){
+    let newSheet = document.createElement("div");
+    newSheet.setAttribute("class", "sheet");
+    newSheet.setAttribute("idx", `${i}`);
+    newSheet.innerText = `Sheet ${i + 1}`;
+    sheetList.appendChild(newSheet);
+
+    newSheet.addEventListener("click", makeSheetActive);
+}
+
 addBtn.addEventListener("click", function(){
     let allSheets = document.querySelectorAll(".sheet");
     let lastSheet = allSheets[allSheets.length-1];
@@ -76,9 +90,10 @@ addBtn.addEventListener("click", function(){
     }
     newSheet.classList.add("active");
 
-    let sheetName = `Sheet${lastIndex + 2}`
-    createSheet(sheetName);
-    sheetDB = workBook[sheetName];
+    let newIdx = lastIndex +1;
+    createSheet(newIdx);
+    sheetDB = workBook[newIdx];
+    localStorage.setItem("workBook", JSON.stringify(workBook));
     setUI();
 
     newSheet.addEventListener("click", makeSheetActive);
@@ -92,17 +107,17 @@ function makeSheetActive(e){
     }
     cSheet.classList.add("active");
     let idx = cSheet.getAttribute("idx");
-    let sheetName = `Sheet${Number(idx) + 1}`;
 
-    if(!workBook[sheetName]){
-        createSheet(sheetName)
+    if(!workBook[idx]){
+        createSheet(idx)
+        localStorage.setItem("workBook", JSON.stringify(workBook));
     }
 
-    sheetDB = workBook[sheetName];
+    sheetDB = workBook[idx];
     setUI();
 }
 
-function createSheet(sheetName){
+function createSheet(idx){
     let newDB = [];
     for(let i=0; i<rows; i++){
         let row = [];
@@ -127,7 +142,7 @@ function createSheet(sheetName){
         newDB.push(row);
     }
 
-    workBook[sheetName] = newDB;
+    workBook[idx] = newDB;
 }
 
 function setUI(){
@@ -140,7 +155,7 @@ function setUI(){
             elem.style.textDecoration = underline;
             elem.style.textAlign = hAlign;
             elem.style.fontFamily = fontFamily;
-            elem.style.fontSize = fontSize;
+            elem.style.fontSize = fontSize + "px";
             elem.style.color = color;
             elem.style.backgroundColor = bColor;
             elem.innerText = value;
@@ -248,6 +263,7 @@ boldBtn.addEventListener("click", function(){
         boldBtn.classList.remove("active-btn");
         cellObject.bold = "normal";
     }
+    localStorage.setItem("workBook", JSON.stringify(workBook));
 })
 
 underlineBtn.addEventListener("click", function(){
@@ -266,6 +282,7 @@ underlineBtn.addEventListener("click", function(){
         underlineBtn.classList.remove("active-btn");
         cellObject.underline = "none";
     }
+    localStorage.setItem("workBook", JSON.stringify(workBook));
 })
 
 italicBtn.addEventListener("click", function(){
@@ -284,6 +301,7 @@ italicBtn.addEventListener("click", function(){
         italicBtn.classList.remove("active-btn");
         cellObject.italic = "normal";
     }
+    localStorage.setItem("workBook", JSON.stringify(workBook));
 })
 
 for(let i=0; i<allAlignButtons.length; i++){
@@ -302,6 +320,7 @@ for(let i=0; i<allAlignButtons.length; i++){
         })
 
         allAlignButtons[i].classList.add("active-btn");
+        localStorage.setItem("workBook", JSON.stringify(workBook));
     })
 }
 
@@ -314,6 +333,7 @@ fontSizeElem.addEventListener("change", function(){
     let cellObject = sheetDB[rid][cid];
     cellObject.fontSize = fontSize
     uiCellElem.style.fontSize = fontSize + "px";
+    localStorage.setItem("workBook", JSON.stringify(workBook));
 })
 
 fontFamilyElem.addEventListener("change", function(){
@@ -325,6 +345,7 @@ fontFamilyElem.addEventListener("change", function(){
     let cellObject = sheetDB[rid][cid];
     cellObject.fontFamily = fontFamily
     uiCellElem.style.fontFamily = fontFamily;
+    localStorage.setItem("workBook", JSON.stringify(workBook));
 })
 
 for(let i=0; i<colorButtons.length; i++){
@@ -343,6 +364,7 @@ for(let i=0; i<colorButtons.length; i++){
             cellObject.bColor = val;
             uiCellElem.style.backgroundColor = val;
         }
+        localStorage.setItem("workBook", JSON.stringify(workBook));
     })
 }
 

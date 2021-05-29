@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excel Clone</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -62,7 +63,15 @@
         </div>
         
         <div class="grid">
-        
+            <div class="modal-container animate__animated animate__bounceIn">
+                <div class="modal-name__conatiner">
+                    <label for="file-name">Filename: </label>
+                    <input type="text" id="file-name">
+                    <input type="text" value=".json" class="ext" readonly>
+                    <button class="saveBtn">Save File</button>
+                    <button class="closeBtn">Close</button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="sheets-container">

@@ -1,9 +1,38 @@
 'use strict'
 
 let save = document.querySelector(".save");
-let open = document.querySelector(".open")
+let open = document.querySelector(".open");
+let modalContainer = document.querySelector(".modal-container");
+let saveBtn = document.querySelector(".saveBtn");
+let input = document.querySelector("#file-name");
+let closeBtn = document.querySelector(".closeBtn");
+
+let flag = false;
 
 save.addEventListener("click", function(){
+    if(flag == false){
+        modalContainer.style.display = "flex";
+    }else{
+        modalContainer.style.display = "none";
+    }
+
+    flag = !flag;
+})
+
+closeBtn.addEventListener("click", function(){
+    flag = false;
+    input.value = "";
+    modalContainer.style.display = "none";
+})
+
+saveBtn.addEventListener("click", function(){
+    let fileName = input.value;
+    input.value = "";
+    flag = false;
+    modalContainer.style.display = "none";
+    
+    if(fileName.trim() == "") return;
+    
     const data = JSON.stringify(sheetDB);
 
     const blob = new Blob([data], { type: 'application/json' });
@@ -15,7 +44,7 @@ save.addEventListener("click", function(){
 
     a.href = url;
 
-    a.download = "file.json";
+    a.download = fileName + ".json";
 
     a.click();
 })
